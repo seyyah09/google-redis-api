@@ -1,31 +1,40 @@
-import { Injectable } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/typeorm/entities/user.entity';
+import { CreateUserDto } from 'src/dto/createUser-dto';
+import { GoogleUser, User } from 'src/typeorm/entities/user.entity';
+import { UserService } from 'src/user/user.service';
 import { UserDetails } from 'src/utils/types';
 import { Repository } from 'typeorm';
 
 @Injectable()
 export class AuthService {
     constructor(
+        @InjectRepository(GoogleUser) private readonly googleUserRepository: Repository<GoogleUser>,
         @InjectRepository(User) private readonly userRepository: Repository<User>,
+        private readonly userService: UserService
     ) {}
-    async validateUser(details: UserDetails) {
-        console.log('AuthService');
+    async validateGoogleUser(details: UserDetails) {
         console.log(details);
-        const user = await this.userRepository.findOneBy({
+        const user = await this.googleUserRepository.findOneBy({
             email: details.email
         });
         console.log(user);
         
         if (user) return user;
         
-        console.log('User not found. Creating...');
-        const newUser = this.userRepository.create(details);
-        return this.userRepository.save(newUser);
+        const newUser = await this.googleUserRepository.create(details);
+        return await this.googleUserRepository.save(newUser);
     }
 
-    async findUser(id: number) {
-        const user = await this.userRepository.findOneBy({ id });
-        return user;
+    async validateUser(username: string, password: string) {
+        const user = await this.userService.findByUsername(username);
+        
+        if(user && (await bcrypt.compare(password, user.password) )) {
+            const { password, ...result } = user;
+            return result;
+        }
+
+        return null;
     }
 }

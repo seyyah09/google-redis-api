@@ -3,6 +3,7 @@
 /node_modules
 commands.txt
 .env
+tasks.txt
 
 # Logs
 logs

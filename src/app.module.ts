@@ -7,6 +7,10 @@ import { AuthModule } from './auth/auth.module';
 import { AppController } from './app.controller';
 import ormconfig from 'ormconfig';
 import { PassportModule } from '@nestjs/passport';
+import { AuthController } from './auth/auth.controller';
+import { AuthService } from './auth/auth.service';
+import { UserModule } from './user/user.module';
+
 
 @Module({
   imports: [
@@ -16,9 +20,10 @@ import { PassportModule } from '@nestjs/passport';
     }),
     TypeOrmModule.forRoot(ormconfig),
     PassportModule.register({ session: true }),
+    UserModule,
   ],
   
   controllers: [AppController],
-  providers: [AppService, Repository],
+  providers: [AppService],
 })
 export class AppModule {}
