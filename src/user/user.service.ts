@@ -38,4 +38,14 @@ export class UserService {
         const user = await this.userRepository.findOne({ where: {username: username} });
         return user;
     }
+
+    async getAllUsers(){
+        console.log('service e kadar geldik');
+        return await this.userRepository.find({
+            select: {
+                id: true,
+                username: true,
+            }
+        })
+    }
 }
