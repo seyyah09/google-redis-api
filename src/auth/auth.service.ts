@@ -40,19 +40,18 @@ export class AuthService {
         return null;
     }
 
-    async login(userinfo: User) {
-        const payload = {
-          username: userinfo.username,
-          sub: {
-            userId: userinfo.id
-          }
-        };
+    async login(user: User) {
+      const payload = {
+        username: user.username,
+        sub: {
+          userId: user.id
+        }
+      };
     
-        return await {
-          ...userinfo,
-          accessToken: this.jwtService.sign(payload),
-          payload
-          //refreshToken: this.jwtService.sign(payload, { expiresIn: '7d' }),
-        };
-      }
+      return await {
+        ...user,
+        accessToken: this.jwtService.sign(payload),
+        //refreshToken: this.jwtService.sign(payload, { expiresIn: '7d' }),
+      };
+    }
 }

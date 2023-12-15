@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { AppController } from './app.controller';
-import ormconfig from 'ormconfig';
+import config from 'ormconfig';
 import { PassportModule } from '@nestjs/passport';
 import { AuthController } from './auth/auth.controller';
 import { AuthService } from './auth/auth.service';
@@ -18,7 +18,7 @@ import { UserModule } from './user/user.module';
     ConfigModule.forRoot({
       isGlobal: true
     }),
-    TypeOrmModule.forRoot(ormconfig),
+    TypeOrmModule.forRoot(config),
     PassportModule.register({ session: true }),
     UserModule,
   ],

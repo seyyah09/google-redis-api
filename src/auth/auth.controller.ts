@@ -30,7 +30,7 @@ export class AuthController {
     @Post('login')
     @UseGuards(LocalAuthGuard)
     async login(@Request() req) {
-        console.log('gelen bilgiler:');
+        console.log('login info:');
         console.log(req.user);
         return await this.authService.login(req.user);
     }

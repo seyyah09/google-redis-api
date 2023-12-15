@@ -40,7 +40,6 @@ export class UserService {
     }
 
     async getAllUsers(){
-        console.log('service e kadar geldik');
         return await this.userRepository.find({
             select: {
                 id: true,

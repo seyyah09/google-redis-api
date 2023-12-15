@@ -3,16 +3,17 @@ import { ExtractJwt, Strategy } from "passport-jwt";
 
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     constructor() {
-        console.log(`deneme ${process.env.jwt_secret} ${ExtractJwt.fromAuthHeaderAsBearerToken()}`);
+        console.log(process.env.jwtsecret);
+        //const secretFromDotEnvFile: string = process.env.jwtsecret;
+        //console.log(`secret from dotenv check: ${secretFromDotEnvFile}`);
         super({
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
             ignoreExpiration: false,
-            secretOrKey: `${process.env.jwt_secret}`,
+            secretOrKey: process.env.jwtsecret
         });
     }
 
-    validate(payload: any) {
-        console.log(`jwt str.a gelen payload soyle: ${payload}`);
-        return { user: payload.sub, username: payload.username };
+    async validate(payload: any) {
+        return { username: payload.username, user: payload.sub };
     }
 }
