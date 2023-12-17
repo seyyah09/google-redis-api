@@ -35,7 +35,7 @@ export class AuthController {
         return await this.authService.login(req.user);
     }
     
-    @Post('createuser')
+    @Post('create')
     async createUser(@Body() dto: CreateUserDto) {
         console.log(dto);
         return  {

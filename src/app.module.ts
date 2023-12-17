@@ -10,6 +10,7 @@ import { PassportModule } from '@nestjs/passport';
 import { AuthController } from './auth/auth.controller';
 import { AuthService } from './auth/auth.service';
 import { UserModule } from './user/user.module';
+import { ProductModule } from './product/product.module';
 
 
 @Module({
@@ -21,6 +22,7 @@ import { UserModule } from './user/user.module';
     TypeOrmModule.forRoot(config),
     PassportModule.register({ session: true }),
     UserModule,
+    ProductModule,
   ],
   
   controllers: [AppController],

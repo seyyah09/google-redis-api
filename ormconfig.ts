@@ -2,6 +2,7 @@
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 import { User, GoogleUser } from "src/typeorm/entities/user.entity";
 import { config } from "dotenv";
+import { Product } from "src/typeorm/entities/product.entity";
 config();
 
 const ormconfig: PostgresConnectionOptions = {
@@ -11,7 +12,7 @@ const ormconfig: PostgresConnectionOptions = {
     port: parseInt(process.env.DB_PORT, 10),
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
-    entities: [User, GoogleUser],
+    entities: [User, GoogleUser, Product],
     synchronize: true,
 };
 
