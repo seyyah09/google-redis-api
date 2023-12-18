@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from 'src/dto/createProduct-dto';
 
@@ -14,5 +14,15 @@ export class ProductController {
             product: await this.productService.create(dto)
         }
     };
+
+    @Get('getall')
+    async getAll() {
+        return this.productService.getAll()
+    }
+
+    @Get(':cat')
+    async getByCategory(@Param('cat') category:string) {
+        return await this.productService.getByCategory(category)
+    }
 }
 

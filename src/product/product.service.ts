@@ -28,7 +28,39 @@ export class ProductService {
     }
 
     async findByCode(code: string) {
-        return await this.productRepository.findOneBy({ code });
-        
+        return await this.productRepository.findOneBy({ code });        
+    }
+
+    async getAll() {
+        return await this.productRepository.find({
+            select: {
+                id: true,
+                productname: true,
+                category: true,
+                brand: true,
+                price: true,
+                reviewScore: true,
+            }
+        })
+    }
+
+    async getByCategory(category: string) {
+        const result = await this.productRepository.find({
+            where: {
+            category: category
+            },
+            select: {
+                id: true,
+                productname: true,
+                brand: true,
+                price: true,
+                reviewScore: true,
+            }                
+        })
+
+        return {
+            message: `products in category ${category}:`,
+            result
+        }
     }
 }

@@ -17,9 +17,12 @@ export class Product {
   @Column({ nullable: false })
   brand: string;
 
-  @Column({ nullable: false })
+  @Column({ type: 'numeric', precision: 9, scale: 2 })
   price: number;
 
+  @Column({ type: 'numeric', precision: 4, scale: 0, default: 100 })
+  stock: number;
+  
   @Column({ type: 'numeric', precision: 3, scale: 2, default: -1 })
   reviewScore: number;
 }
